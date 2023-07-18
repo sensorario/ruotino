@@ -4,9 +4,6 @@ namespace App\Tests;
 
 use App\Command;
 use App\ControllerFactory;
-use App\JsonServer;
-use App\RequestContext;
-use App\Server;
 use App\BadRequestController;
 use PHPUnit\Framework\TestCase;
 
@@ -35,10 +32,14 @@ class ControllerFactoryTest extends TestCase
     {
         $factory = new ControllerFactory([
             '/foo/:bar' => ExistingController::class,
+            '/fizz/fuzz/sprazz/:buzz' => WrongCongtroller::class,
+            '/fizz/:buzz' => AnotherCongtroller::class,
         ]);
-        $controller = $factory->getController('/foo/42');
-        $this->assertInstanceOf(ExistingController::class, $controller);
+        $controller = $factory->getController('/fizz/ciaone');
+        $this->assertInstanceOf(AnotherCongtroller::class, $controller);
     }
 }
 
 class ExistingController implements Command {}
+class AnotherCongtroller implements Command {}
+class WrongCongtroller implements Command {}

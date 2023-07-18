@@ -29,7 +29,12 @@ class ControllerFactory
         if (!isset($this->routes[$action])) {
             foreach(array_keys($this->routes) as $path) {
                 if (strpos($path, ':') != 0) {
-                    return new $this->routes[$path];
+                    $explodedPath = explode('/', $path);
+                    $explodedAction = explode('/', $action);
+                    if (
+                        $explodedAction[1] === $explodedPath[1]
+                        && count($explodedAction) === count($explodedPath)
+                    ) return new $this->routes[$path];
                 }
             }
         }

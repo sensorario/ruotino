@@ -2,6 +2,7 @@
 
 namespace App;
 
+/** @codeCoverageIgnore */
 class CiaoneController implements Command
 {
     public function get($context)
