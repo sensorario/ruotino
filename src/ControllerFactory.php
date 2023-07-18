@@ -18,12 +18,30 @@ class ControllerFactory
     }
 
     private function route($action) {
-        return in_array($action, array_keys($this->routes))
+        $static = in_array($action, array_keys($this->routes))
             ? $action
             : null;
+        
+        if ($static === null) {
+            foreach(array_keys($this->routes) as $path) {
+                if (strpos($path, ':') != 0) {
+                    return $action;
+                }
+            }
+        }
+
+        return $static;
     }
 
     private function controller($action) {
+        if (!isset($this->routes[$action])) {
+            foreach(array_keys($this->routes) as $path) {
+                if (strpos($path, ':') != 0) {
+                    return new $this->routes[$path];
+                }
+            }
+        }
+
         return new $this->routes[$action];
     }
 }

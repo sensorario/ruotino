@@ -29,6 +29,16 @@ class ControllerFactoryTest extends TestCase
         $controller = $factory->getController('exists');
         $this->assertInstanceOf(ExistingController::class, $controller);
     }
+
+    /** @test */
+    public function catchAlsoDynamicRoutes()
+    {
+        $factory = new ControllerFactory([
+            '/foo/:bar' => ExistingController::class,
+        ]);
+        $controller = $factory->getController('/foo/42');
+        $this->assertInstanceOf(ExistingController::class, $controller);
+    }
 }
 
 class ExistingController implements Command {}
