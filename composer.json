@@ -1,4 +1,5 @@
 {
+    "name":"sensorario/ruotino",
     "config": {
         "bin-dir": "bin"
     },
