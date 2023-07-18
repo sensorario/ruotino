@@ -9,10 +9,12 @@ class ControllerFactory
     ) {
     }
 
-    public function getController(string $action): Command
-    {
+    public function getController(
+        string $action,
+        RequestContext $context
+    ): Command {
         return match($action) {
-            $this->route($action) => $this->controller($action),
+            $this->route($action) => $this->controller($action, $context),
             default => new BadRequestController,
         };
     }
@@ -25,7 +27,7 @@ class ControllerFactory
         }
     }
 
-    private function controller($action) {
+    private function controller($action, RequestContext $context) {
         if (!isset($this->routes[$action])) {
             foreach(array_keys($this->routes) as $path) {
                 if (strpos($path, ':') != 0) {
@@ -34,7 +36,14 @@ class ControllerFactory
                     if (
                         $explodedAction[1] === $explodedPath[1]
                         && count($explodedAction) === count($explodedPath)
-                    ) return new $this->routes[$path];
+                    ) {
+                        // $context->setVars
+                        $data = [];
+                        $data[current(array_diff($explodedPath, $explodedAction))] = current(array_diff($explodedAction, $explodedPath));
+                        $context->setData($data);
+
+                        return new $this->routes[$path]();
+                    }
                 }
             }
         }

@@ -14,7 +14,10 @@ class JsonServer
         $action = $this->context->action();
         $method = $this->context->method();
 
-        $controller = $this->factory->getController($action);
+        $controller = $this->factory->getController(
+            $action,
+            $this->context,
+        );
 
         if (method_exists($controller, $method)) {
             $controller->$method($this->context);
