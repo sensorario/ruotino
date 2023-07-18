@@ -1,41 +1,10 @@
 # Ruotino
 
-## Front Controller
-
-```php
-<?php
-
-require_once __DIR__ . '/../vendor/autoload.php';
-
-use App\JsonServer;
-use App\RequestContext;
-use App\ControllerFactory;
-
-$routes = [
-    '/ciaone' => App\CiaoneController::class
-];
-
-echo (new JsonServer(
-    new RequestContext,
-    new ControllerFactory($routes),
-))();
+```
+composer create-project sensorario/ruotino laruotadellafortuna
+cd laruotadellafortuna
+php init.php
+make up
 ```
 
-## CiaoneController
-
-```php
-<?php
-
-namespace App;
-
-class CiaoneController implements Command
-{
-    public function get($context)
-    {
-        $context->setResponse([
-            'code' => 200,
-            'message' => 'OK'
-        ]);
-    }
-}
-```
+Then open http://localhost:8894/ciaone
