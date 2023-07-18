@@ -23,12 +23,12 @@ class RequestContext
 
     public function action()
     {
-        return $this->server->requestUri(); // ['REQUEST_URI'];
+        return $this->server->getDefaults()['REQUEST_URI'];
     }
 
     public function method()
     {
-        return strtolower($this->params['REQUEST_METHOD']);
+        return strtolower($this->server->getDefaults()['REQUEST_METHOD']);
     }
 }
 
