@@ -5,7 +5,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "1.1-dev"
+            "dev-main": "0.0-dev"
         }
     },
     "license": "MIT",
@@ -15,10 +15,10 @@
         }
     },
     "require-dev": {
+        "consolidation/robo": "^4",
         "phpunit/phpunit": "^9.5"
     },
     "require": {
-        "consolidation/robo": "^4",
         "totten/lurkerlite": "^1.3"
     }
 }
