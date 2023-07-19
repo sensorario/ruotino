@@ -5,6 +5,7 @@ namespace App\Tests;
 use App\Command;
 use App\ControllerFactory;
 use App\BadRequestController;
+use App\RequestContext;
 use PHPUnit\Framework\TestCase;
 
 class ControllerFactoryTest extends TestCase
@@ -13,7 +14,7 @@ class ControllerFactoryTest extends TestCase
     public function returnBadRequestIfNoRoutesAreDefinedAndControllerIsStillRequested()
     {
         $factory = new ControllerFactory;
-        $controller = $factory->getController('not exists');
+        $controller = $factory->getController('not exists', new RequestContext());
         $this->assertInstanceOf(BadRequestController::class, $controller);
     }
 
@@ -23,7 +24,7 @@ class ControllerFactoryTest extends TestCase
         $factory = new ControllerFactory([
             'exists' => ExistingController::class,
         ]);
-        $controller = $factory->getController('exists');
+        $controller = $factory->getController('exists', new RequestContext());
         $this->assertInstanceOf(ExistingController::class, $controller);
     }
 
@@ -35,7 +36,7 @@ class ControllerFactoryTest extends TestCase
             '/fizz/fuzz/sprazz/:buzz' => WrongCongtroller::class,
             '/fizz/:buzz' => AnotherCongtroller::class,
         ]);
-        $controller = $factory->getController('/fizz/ciaone');
+        $controller = $factory->getController('/fizz/ciaone', new RequestContext());
         $this->assertInstanceOf(AnotherCongtroller::class, $controller);
     }
 }
