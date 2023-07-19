@@ -9,6 +9,7 @@ use App\ControllerFactory;
 $routes = [
     '/ciaone' => App\CiaoneController::class,
     '/mondone/:number' => App\MondoneController::class,
+    '/mon/:done/:number' => App\MondoneController::class,
 ];
 
 echo (new JsonServer(

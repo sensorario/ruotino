@@ -36,11 +36,17 @@ class ControllerFactory
 
             $explodedPath = explode('/', $matcher->getPath());
             $explodedAction = explode('/', $action);
+
             $data = [];
-            $data[current(array_diff($explodedPath, $explodedAction))] = current(array_diff($explodedAction, $explodedPath));
+            foreach (array_diff($explodedPath, $explodedAction) as $index => $value) {
+                $data[$explodedPath[$index]] = $explodedAction[$index];
+            }
+
             $context->setData($data);
 
             return $controller;
         }
+
+        return new BadRequestController;
     }
 }
