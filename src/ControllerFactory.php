@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\UriMatcher\UriMatcher;
+
 class ControllerFactory
 {
     public function __construct(
@@ -28,26 +30,17 @@ class ControllerFactory
     }
 
     private function controller($action, RequestContext $context) {
-        if (!isset($this->routes[$action])) {
-            foreach(array_keys($this->routes) as $path) {
-                if (strpos($path, ':') != 0) {
-                    $explodedPath = explode('/', $path);
-                    $explodedAction = explode('/', $action);
-                    if (
-                        $explodedAction[1] === $explodedPath[1]
-                        && count($explodedAction) === count($explodedPath)
-                    ) {
-                        // $context->setVars
-                        $data = [];
-                        $data[current(array_diff($explodedPath, $explodedAction))] = current(array_diff($explodedAction, $explodedPath));
-                        $context->setData($data);
+        $matcher = new UriMatcher(array_keys($this->routes), $action);
+        if ($matcher->match()) {
+            $controller = new $this->routes[$matcher->getPath()]();
 
-                        return new $this->routes[$path]();
-                    }
-                }
-            }
+            $explodedPath = explode('/', $matcher->getPath());
+            $explodedAction = explode('/', $action);
+            $data = [];
+            $data[current(array_diff($explodedPath, $explodedAction))] = current(array_diff($explodedAction, $explodedPath));
+            $context->setData($data);
+
+            return $controller;
         }
-
-        return new $this->routes[$action];
     }
 }
