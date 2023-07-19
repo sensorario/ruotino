@@ -39,18 +39,6 @@ class ControllerFactoryTest extends TestCase
         $controller = $factory->getController('/fizz/ciaone', new RequestContext());
         $this->assertInstanceOf(AnotherCongtroller::class, $controller);
     }
-
-    /** @test */
-    public function catchAlsoComplexDynamicRoutes()
-    {
-        $this->markTestSkipped();
-        $factory = new ControllerFactory([
-            '/fizz/:buzz/wrong' => WrongCongtroller::class,
-            '/fizz/:buzz/another' => AnotherCongtroller::class,
-        ]);
-        $controller = $factory->getController('/fizz/ciaone/another', new RequestContext());
-        $this->assertInstanceOf(AnotherCongtroller::class, $controller);
-    }
 }
 
 class ExistingController implements Command {}
