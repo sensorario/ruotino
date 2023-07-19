@@ -6,11 +6,7 @@ use App\JsonServer;
 use App\RequestContext;
 use App\ControllerFactory;
 
-$routes = [
-    '/ciaone' => App\CiaoneController::class,
-    '/mondone/:number' => App\MondoneController::class,
-    '/mon/:done/:number' => App\MondoneController::class,
-];
+$routes = require_once __DIR__ . '/../config/routes.php';
 
 echo (new JsonServer(
     new RequestContext,
