@@ -30,6 +30,7 @@ class ControllerFactory
     }
 
     private function controller($action, RequestContext $context) {
+        if ($this->routes === []) return new BadRequestController;
         $matcher = new UriMatcher(array_keys($this->routes), $action);
         if ($matcher->match()) {
             $controller = new $this->routes[$matcher->getPath()]();
@@ -46,7 +47,5 @@ class ControllerFactory
 
             return $controller;
         }
-
-        return new BadRequestController;
     }
 }
