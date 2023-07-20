@@ -55,8 +55,8 @@ class UriMatcher
 
     public function getData()
     {
-        $explodedPath = explode('/', $matcher->getPath());
-        $explodedAction = explode('/', $currentUrl);
+        $explodedPath = explode('/', $this->getPath());
+        $explodedAction = explode('/', $this->currentUrl);
 
         $data = [];
         foreach (array_diff($explodedPath, $explodedAction) as $index => $value) {
