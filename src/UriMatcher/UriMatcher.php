@@ -52,4 +52,17 @@ class UriMatcher
     {
         return $this->path[$this->position];
     }
+
+    public function getData()
+    {
+        $explodedPath = explode('/', $matcher->getPath());
+        $explodedAction = explode('/', $currentUrl);
+
+        $data = [];
+        foreach (array_diff($explodedPath, $explodedAction) as $index => $value) {
+            $data[$explodedPath[$index]] = $explodedAction[$index];
+        }
+
+        return $data;
+    }
 }

@@ -35,15 +35,7 @@ class ControllerFactory
         if ($matcher->match()) {
             $controller = new $this->routes[$matcher->getPath()]();
 
-            $explodedPath = explode('/', $matcher->getPath());
-            $explodedAction = explode('/', $action);
-
-            $data = [];
-            foreach (array_diff($explodedPath, $explodedAction) as $index => $value) {
-                $data[$explodedPath[$index]] = $explodedAction[$index];
-            }
-
-            $context->setData($data);
+            $context->setData($matcher->getData());
 
             return $controller;
         }
