@@ -14,8 +14,9 @@ class UriMatcher
     }
 
     public function match () {
-        if (is_string($this->path))
+        if (is_string($this->path)) {
             return $this->matchCount($this->path, $this->currentUrl);
+        }
 
         foreach ($this->path as $pathIndex => $path) {
             if ($this->matchCount($path, $this->currentUrl)) {
