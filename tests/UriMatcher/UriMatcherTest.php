@@ -28,7 +28,7 @@ class UriMatcherTest extends TestCase
         ];
     }
     /** @test **/
-    public function adsfasdfasadasdas()
+    public function catchRightUriBetweenUrisWithSameNumberOfSegments()
     {
         $matcher = new UriMatcher([
             '/uno/due/tre',
