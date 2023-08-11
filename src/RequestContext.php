@@ -9,6 +9,7 @@ class RequestContext
     public function __construct(
         private array $response = [],
         private $server = new Server,
+        private array $data = [],
     ) { }
 
     public function setResponse(array $response)
@@ -29,6 +30,16 @@ class RequestContext
     public function method()
     {
         return strtolower($this->server->getDefaults()['REQUEST_METHOD']);
+    }
+
+    public function setData(array $data = [])
+    {
+        $this->data = $data;
+    }
+
+    public function getData(): array
+    {
+        return $this->data;
     }
 }
 
